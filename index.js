@@ -1,3 +1,4 @@
-var server = require("./server");//导入start函数，即导入server模块
+var server = require("./server");
+var router = require("./router");
 
-server.start();
+server.start(router.route);

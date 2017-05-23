@@ -1,10 +1,16 @@
 //这是一个简约而不简单的Http服务器
 
 var http = require("http");
+var url = require("url");
 
-function start() {
+
+function start(route) { //将路由函数作为参数传递过去
   function onRequest(request, response) {
-    console.log("Request received.");
+    var pathname = url.parse(request.url).pathname;
+    console.log("Request for " + pathname + " received.");
+
+    route(pathname);
+
     response.writeHead(200, {"Content-Type": "text/plain"});
     response.write("Hello World");
     response.end();
@@ -13,6 +19,8 @@ function start() {
   http.createServer(onRequest).listen(8888);
   console.log("Server has started.");
 }
+
+
 console.log("正在监听http://localhost:8888/");
 
 exports.start = start; //导出start函数，即导入server模块
