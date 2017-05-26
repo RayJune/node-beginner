@@ -3,23 +3,17 @@
 var http = require("http");
 var url = require("url");
 
-
-function start(route, handle) { //将路由函数作为参数传递过去
+function start(route, handle) {
   function onRequest(request, response) {
     var pathname = url.parse(request.url).pathname;
     console.log("Request for " + pathname + " received.");
 
-    route(handle, pathname);
-
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.write("Hello World");
-    response.end();
+    route(handle, pathname, request, response);
   }
 
   http.createServer(onRequest).listen(8888);
   console.log("Server has started.");
 }
-
 
 console.log("正在监听http://localhost:8888/");
 
